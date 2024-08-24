@@ -9,5 +9,8 @@
     @else
         <p>Email: not found</p>
     @endif
+    `,
+    footer = @`
+        <p>Just do it</p>
     `
 )
