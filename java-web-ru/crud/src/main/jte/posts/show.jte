@@ -2,10 +2,18 @@
 @import exercise.util.NamedRoutes
 @param PostPage page
 @template.layout.page(
+content = @`
+    <main>
+        <div class="mx-auto p-4 py-md-5">
+            <h1>${page.getPost().getName()}</h1>
+        </div>
 
-    content = @`
-        <h3>${page.getPost().getName()}</h3>
-        <p>Content: ${page.getPost().getBody()}</p>
+        <div class="mx-auto p-4 py-md-5">
+            ${page.getPost().getBody()}
+        </div>
+        <div class="mx-auto p-4 py-md-1">
         <a href="${NamedRoutes.postsPath()}">All posts</a>
-    `
+        </div>
+    </main>
+`
 )
