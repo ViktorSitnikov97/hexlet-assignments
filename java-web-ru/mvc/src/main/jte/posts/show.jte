@@ -14,7 +14,7 @@
             </div>
             <!-- BEGIN -->
             <div class="mx-auto p-4 py-md-5">
-                <a href="${NamedRoutes.editPostPath(page.getPost().getId())}">Edit post</a>
+                <a class="btn btn-primary btn-sm" href="${NamedRoutes.editPostPath(page.getPost().getId())}" role="button">Редактировать</a>
             </div>
             <!-- END -->
         </main>
