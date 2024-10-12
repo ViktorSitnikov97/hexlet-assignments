@@ -25,16 +25,15 @@ public class SessionsController {
 
         try {
             var name = ctx.formParamAsClass("name", String.class)
-                    .check(UsersRepository::existsByName,"Нет такого имени")
+                    .check(UsersRepository::existsByName, "Нет такого имени")
                     .get();
             var user = UsersRepository.findByName(name);
             var password = ctx.formParamAsClass("password", String.class)
                     .check(value -> encrypt(value).equals(user.get().getPassword()), "Пароли не совпадают")
                     .get();
             ctx.sessionAttribute("session", name);
-            ctx.status(302);
             ctx.redirect(NamedRoutes.rootPath());
-        } catch(ValidationException e) {
+        } catch (ValidationException e) {
             var page = new LoginPage(null, "Wrong username or password");
             ctx.status(302);
             ctx.render("build.jte", model("page", page));
