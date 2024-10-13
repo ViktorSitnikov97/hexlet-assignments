@@ -32,6 +32,7 @@ public class PostsController {
             var post = new Post(title, description);
             PostRepository.save(post);
             ctx.sessionAttribute("flash", "Post was successfully created!");
+            ctx.sessionAttribute("flash-type", "success");
             ctx.redirect(NamedRoutes.postsPath());
         } catch (ValidationException e) {
             var page = new BuildPostPage(null, null, e.getErrors());
@@ -42,6 +43,7 @@ public class PostsController {
         List<Post> posts = PostRepository.getEntities();
         var page = new PostsPage(posts);
         page.setFlash(ctx.consumeSessionAttribute("flash"));
+        page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
         ctx.render("posts/index.jte", model("page", page));
     }
     // END
