@@ -64,7 +64,7 @@ public class ProductsRepository extends BaseRepository {
             var resultSet = preparedStatement.executeQuery();
             List<Product> products = new ArrayList<>();
 
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 var title = resultSet.getString("title");
                 var price = resultSet.getInt("price");
                 var prod = new Product(title, price);
