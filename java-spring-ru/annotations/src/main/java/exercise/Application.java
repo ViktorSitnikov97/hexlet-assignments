@@ -9,13 +9,13 @@ public class Application {
         var address = new Address("London", 12345678);
 
         // BEGIN
-        for (Method method : Address.class.getDeclaredMethods()) {
+        for (Method method : address.getClass().getDeclaredMethods()) {
             if (method.isAnnotationPresent(Inspect.class)) {
                 try {
                     System.out.println("Method "
                             + method.getName()
                             + " returns a value of type "
-                            + (method.invoke(address).getClass().getTypeName().contains("String") ? "String" : "int"));
+                            + (method.getReturnType().getSimpleName()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
