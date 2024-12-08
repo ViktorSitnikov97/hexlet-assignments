@@ -58,9 +58,11 @@ public class Application {
     @PostMapping("/posts")
     public ResponseEntity<Post> create(@RequestBody Post post) throws URISyntaxException {
         posts.add(post);
-        ResponseEntity<Post> body = ResponseEntity.created(new URI("http://localhost:8080/posts/" + post.getId()))
-                .body(post);
-        return body;
+//        ResponseEntity<Post> body = ResponseEntity.created(new URI("http://localhost:8080/posts/" + post.getId()))
+//                .body(post);
+//        return body;
+        URI location = URI.create("/posts");
+        return ResponseEntity.created(location).body(post);
     }
 
     @PutMapping("/posts/{id}")
@@ -68,15 +70,15 @@ public class Application {
         var maybePost = posts.stream()
                 .filter(p -> p.getId().equals(id))
                 .findFirst();
-
+        var status = HttpStatus.NO_CONTENT;
         if (maybePost.isPresent()) {
             var currentPost = maybePost.get();
             currentPost.setId(data.getId());
             currentPost.setTitle(data.getTitle());
             currentPost.setBody(data.getBody());
-            return ResponseEntity.ok(data);
+            status = HttpStatus.OK;
         }
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(data);
+        return ResponseEntity.status(status).body(data);
     }
     // END
 
