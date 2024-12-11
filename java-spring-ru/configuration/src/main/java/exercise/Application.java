@@ -25,14 +25,17 @@ public class Application {
 
     // BEGIN
     @Autowired
-    private UserProperties userInfo;
+    private UserProperties usersInfo;
 
     @GetMapping("/admins")
     @ResponseStatus(HttpStatus.OK)
     public List<String> getNamesAdmins() {
+
+        List<String> adminEmails = usersInfo.getAdmins();
         return users.stream()
-                .filter(user -> userInfo.getAdmins().contains(user.getEmail()))
+                .filter(user -> adminEmails.contains(user.getEmail()))
                 .map(User::getName)
+                .sorted()
                 .collect(Collectors.toList());
     }
     // END
