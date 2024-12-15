@@ -42,7 +42,7 @@ public class TasksController {
     // BEGIN
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
-    public Task create(@RequestBody Task taskData){
+    public Task create(@RequestBody Task taskData) {
         taskRepository.save(taskData);
         return taskData;
     }
@@ -57,7 +57,7 @@ public class TasksController {
 
         task.setTitle(taskData.getTitle());
         task.setDescription(taskData.getDescription());
-        task.setUpdatedAt(taskData.getUpdatedAt());
+//        task.setUpdatedAt(taskData.getUpdatedAt()); это необязательно - автоматически меняется в сущности
 
         return taskRepository.save(task);
     }
