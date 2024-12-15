@@ -26,13 +26,12 @@ public class ProductsController {
     // BEGIN
     @GetMapping(path = "")
     @ResponseStatus(HttpStatus.OK)
-    public List<Product> index(@RequestParam(defaultValue = "0") int min, @RequestParam(defaultValue = "100000000") int max) {
-        Sort sort = Sort.by(Sort.Order.asc("price"));
-        var products = productRepository.findAll(sort).stream()
-                .filter(p -> p.getPrice() < max)
-                .filter(p -> p.getPrice() > min)
-                .toList();
+    public List<Product> index(
+            @RequestParam(defaultValue = Integer.MIN_VALUE + "") Integer min,
+            @RequestParam(defaultValue = Integer.MAX_VALUE + "") Integer max) {
 
+        Sort sort = Sort.by(Sort.Order.asc("price"));
+        var products = productRepository.findByPriceBetween(min, max, sort);
         return products;
     }
     // END

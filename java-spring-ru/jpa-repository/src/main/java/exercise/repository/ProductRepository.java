@@ -11,6 +11,6 @@ import org.springframework.data.domain.Sort;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     // BEGIN
 
-    List<Product> findAll(Sort sort);
+    List<Product> findByPriceBetween(Integer min, Integer max, Sort sort);
     // END
 }
