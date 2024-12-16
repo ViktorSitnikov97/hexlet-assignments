@@ -33,7 +33,7 @@ public class PostsController {
         return postRepository.findAll();
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Post show(@PathVariable long id) {
         return postRepository.findAll().stream()
@@ -48,7 +48,7 @@ public class PostsController {
         return postRepository.save(dataPost);
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Post update(@RequestBody Post postData, @PathVariable long id) {
         var post = postRepository.findById(id)
@@ -59,7 +59,7 @@ public class PostsController {
         return postRepository.save(post);
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void destroy(@PathVariable long id) {
         postRepository.deleteById(id);
