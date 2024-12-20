@@ -12,7 +12,7 @@ public class WelcomeController {
     @Autowired
     private Daytime dayTime;
 
-    @GetMapping("/welcome")
+    @GetMapping(path = "/welcome")
     public String sayHello() {
         return "It is " + dayTime.getName() + " now! Welcome to Spring!";
     }
