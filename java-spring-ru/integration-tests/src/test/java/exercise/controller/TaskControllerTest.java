@@ -84,6 +84,12 @@ class ApplicationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(om.writeValueAsString(task)))
                 .andReturn();
+        var body = result.getResponse().getContentAsString();
+
+        assertThatJson(body).and(
+                a -> a.node("title").isEqualTo(task.getTitle()),
+                a -> a.node("description").isEqualTo(task.getDescription())
+        );
     }
 
     @Test
@@ -101,6 +107,12 @@ class ApplicationTest {
 
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
+
+        var task1 = taskRepository.findByTitle(task.getTitle()).get();
+
+        assertThat(task1).isNotNull();
+        assertThat(task1.getTitle()).isEqualTo(task.getTitle());
+        assertThat(task1.getDescription()).isEqualTo(task.getDescription());
     }
 
     @Test
@@ -113,17 +125,12 @@ class ApplicationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(data));
 
-        var result = mockMvc.perform(request)
+        mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andReturn();
 
-        var body = result.getResponse()
-                .getContentAsString();
-
-        assertThatJson(body).and(
-                a -> a.node("title").isEqualTo("Test Title"),
-                a -> a.node("description").isEqualTo("Test Description")
-        );
+        Task task1 = taskRepository.findById(task.getId()).get();
+        assertThat(task1.getTitle()).isEqualTo(data.get("title"));
     }
 
     @Test
