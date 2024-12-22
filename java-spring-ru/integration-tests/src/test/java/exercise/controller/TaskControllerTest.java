@@ -132,11 +132,11 @@ class ApplicationTest {
                 .content(om.writeValueAsString(data));
 
         mockMvc.perform(request)
-                .andExpect(status().isOk())
-                .andReturn();
+                .andExpect(status().isOk());
 
         Task task1 = taskRepository.findById(task.getId()).get();
         assertThat(task1.getTitle()).isEqualTo(data.get("title"));
+        assertThat(task1.getDescription()).isEqualTo(data.get("description"));
     }
 
     @Test
