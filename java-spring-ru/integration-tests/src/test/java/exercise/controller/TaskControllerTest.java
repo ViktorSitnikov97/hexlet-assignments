@@ -101,18 +101,24 @@ class ApplicationTest {
 
     @Test
     public void testCreate() throws Exception {
+        var taskNew = Instancio.of(Task.class)
+                .ignore(Select.field(Task::getId))
+                .supply(Select.field(Task::getTitle), () -> faker.lorem().word())
+                .supply(Select.field(Task::getDescription), () -> faker.lorem().sentence(2))
+                .create();
+
         var request = post("/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(task));
+                .content(om.writeValueAsString(taskNew));
 
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
 
-        var task1 = taskRepository.findByTitle(task.getTitle()).get();
+        var task1 = taskRepository.findByTitle(taskNew.getTitle()).get();
 
         assertThat(task1).isNotNull();
-        assertThat(task1.getTitle()).isEqualTo(task.getTitle());
-        assertThat(task1.getDescription()).isEqualTo(task.getDescription());
+        assertThat(task1.getTitle()).isEqualTo(taskNew.getTitle());
+        assertThat(task1.getDescription()).isEqualTo(taskNew.getDescription());
     }
 
     @Test
