@@ -34,10 +34,10 @@ public class ProductsController {
     @GetMapping(path = "")
     @ResponseStatus(HttpStatus.OK)
     public List<ProductDTO> index() {
-        var products = productRepository.findAll().stream()
+        var products = productRepository.findAll();
+        return products.stream()
                 .map(p -> productMapper.map(p))
                 .toList();
-        return products;
     }
 
     @GetMapping(path = "/{id}")
