@@ -38,13 +38,15 @@ public class Guest {
     private String name;
 
     @Email
-    @Column(unique = true)
+//    @Column(unique = true)
     private String email;
 
+    @Column(unique = true)
     @Pattern(regexp = "^\\+[0-9]{11,13}$",
             message = "Не соответствует формату номера телефона")
     private String phoneNumber;
 
+//    @Pattern(regexp = "\\d{4}")
     @Pattern(regexp = "^[0-9]{4}$",
             message = "Не соответствует формату номера карты")
     private String clubCard;

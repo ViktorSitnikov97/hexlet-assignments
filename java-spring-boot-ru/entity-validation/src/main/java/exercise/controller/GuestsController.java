@@ -52,9 +52,7 @@ public class GuestsController {
         var guest = guestMapper.map(guestCreateDTO);
         guestRepository.save(guest);
         var guestDTO = guestMapper.map(guest);
-
         return guestDTO;
-
     }
     // END
 }

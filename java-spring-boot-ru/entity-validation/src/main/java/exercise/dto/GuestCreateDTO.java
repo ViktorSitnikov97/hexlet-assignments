@@ -18,7 +18,6 @@ public class GuestCreateDTO {
     private String name;
 
     @Email
-    @Column(unique = true)
     private String email;
 
     @Pattern(regexp = "^\\+[0-9]{11,13}$",
