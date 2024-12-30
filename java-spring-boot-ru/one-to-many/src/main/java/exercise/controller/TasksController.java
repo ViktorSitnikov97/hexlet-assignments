@@ -67,8 +67,10 @@ public class TasksController {
                 ));
 
         var task = taskMapper.map(taskCreateDTO);
-        assignee.addTask(task);
-        userRepository.save(assignee);
+//        assignee.addTask(task);
+//        userRepository.save(assignee);
+        task.setAssignee(assignee);
+        taskRepository.save(task);
         var taskDTO = taskMapper.map(task);
 
         return taskDTO;
@@ -79,35 +81,32 @@ public class TasksController {
     public TaskDTO update(@RequestBody @Valid TaskUpdateDTO taskUpdateDTO, @PathVariable Long id) {
         var task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " no found"));
-
-        taskMapper.update(taskUpdateDTO, task);
-
         var assigneeId = taskUpdateDTO.getAssigneeId();
         var assignee = userRepository.findById(assigneeId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "User with id " + assigneeId + " no found"
                 ));
-
+        taskMapper.update(taskUpdateDTO, task);
         task.setAssignee(assignee);
         taskRepository.save(task);
         var taskDTO = taskMapper.map(task);
-
         return taskDTO;
     }
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void destroy(@PathVariable Long id) {
-        var task = taskRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " no found"));
-
-        var assignee = userRepository.findById(task.getAssignee().getId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "User with id " + task.getAssignee().getId() + " no found"
-                ));
-
-        assignee.removeTask(task);
-        userRepository.save(assignee);
+//        var task = taskRepository.findById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " no found"));
+//
+//        var assignee = userRepository.findById(task.getAssignee().getId())
+//                .orElseThrow(() -> new ResourceNotFoundException(
+//                        "User with id " + task.getAssignee().getId() + " no found"
+//                ));
+//
+//        assignee.removeTask(task);
+//        userRepository.save(assignee);
+        taskRepository.deleteById(id);
     }
 
     // END
