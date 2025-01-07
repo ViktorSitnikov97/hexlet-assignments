@@ -1,6 +1,6 @@
 package exercise.controller;
 
-import java.util.HashSet;
+//import java.util.HashSet;
 import java.util.List;
 
 import exercise.dto.ProductCreateDTO;
@@ -8,7 +8,7 @@ import exercise.dto.ProductDTO;
 import exercise.dto.ProductUpdateDTO;
 import exercise.mapper.ProductMapper;
 import exercise.repository.CategoryRepository;
-import jakarta.validation.ConstraintViolationException;
+//import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,12 +58,12 @@ public class ProductsController {
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDTO create(@Valid @RequestBody ProductCreateDTO productData) {
-        var categoryId = productData.getCategoryId();
-        var category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new ConstraintViolationException(new HashSet<>()));
+//        var categoryId = productData.getCategoryId();
+//        var category = categoryRepository.findById(categoryId)
+//                .orElseThrow(() -> new ConstraintViolationException(new HashSet<>()));
 
         var product = productMapper.map(productData);
-        category.getProducts().add(product);
+//        category.getProducts().add(product);
         productRepository.save(product);
         return productMapper.map(product);
     }
@@ -71,15 +71,15 @@ public class ProductsController {
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProductDTO update(@Valid @RequestBody ProductUpdateDTO productData, @PathVariable Long id) {
-        var categoryId = productData.getCategoryId().get();
-        var category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new ConstraintViolationException(new HashSet<>()));
+//        var categoryId = productData.getCategoryId().get();
+//        var category = categoryRepository.findById(categoryId)
+//                .orElseThrow(() -> new ConstraintViolationException(new HashSet<>()));
 
         var product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found"));
 
         productMapper.update(productData, product);
-        category.getProducts().add(product);
+//        category.getProducts().add(product);
         productRepository.save(product);
         return productMapper.map(product);
     }
@@ -87,12 +87,12 @@ public class ProductsController {
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void destroy(@PathVariable Long id) {
-        var product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found"));
-        var category = categoryRepository.findByName(product.getCategory().getName())
-                        .orElseThrow(() -> new ResourceNotFoundException(
-                                "Category with name " + product.getCategory().getName() +" not found"));
-        category.getProducts().remove(product);
+//        var product = productRepository.findById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found"));
+//        var category = categoryRepository.findByName(product.getCategory().getName())
+//                        .orElseThrow(() -> new ResourceNotFoundException(
+//                                "Category with name " + product.getCategory().getName() + " not found"));
+//        category.getProducts().remove(product);
         productRepository.deleteById(id);
     }
 
