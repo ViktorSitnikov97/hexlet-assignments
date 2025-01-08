@@ -20,40 +20,44 @@ public class ProductSpecification {
 
     private Specification<Product> withTitleCont(String titleCont) {
         return ((root, query, criteriaBuilder) ->
-                titleCont == null ?
+                titleCont == null
+                        ?
                         criteriaBuilder.conjunction()
                         :
                         criteriaBuilder.like(criteriaBuilder.lower(
                                 root.get("title")), "%" + titleCont.toLowerCase() + "%"
                         )
-        );
+                );
     }
 
     private Specification<Product> withCategoryId(Long categoryId) {
         return ((root, query, criteriaBuilder) ->
-                categoryId == null ?
+                categoryId == null
+                        ?
                         criteriaBuilder.conjunction()
                         :
                         criteriaBuilder.equal(root.get("category").get("id"), categoryId)
-        );
+                );
     }
 
     private Specification<Product> withPriceLt(Integer priceLt) {
         return ((root, query, criteriaBuilder) ->
-                priceLt == null ?
+                priceLt == null
+                        ?
                         criteriaBuilder.conjunction()
                         :
                         criteriaBuilder.lessThan(root.get("price"), priceLt)
-        );
+                );
     }
 
     private Specification<Product> withPriceGt(Integer priceGt) {
         return ((root, query, criteriaBuilder) ->
-                priceGt == null ?
+                priceGt == null
+                        ?
                         criteriaBuilder.conjunction()
                         :
                         criteriaBuilder.greaterThan(root.get("price"), priceGt)
-        );
+                );
     }
 
     private Specification<Product> withRatingGt(Double ratingGt) {
@@ -62,7 +66,7 @@ public class ProductSpecification {
                 criteriaBuilder.conjunction()
                 :
                 criteriaBuilder.greaterThan(root.get("rating"), ratingGt)
-        );
+                );
     }
 }
 // END
