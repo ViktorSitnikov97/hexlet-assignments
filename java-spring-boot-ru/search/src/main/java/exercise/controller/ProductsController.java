@@ -44,11 +44,9 @@ public class ProductsController {
     public List<ProductDTO> index(ProductParamsDTO params, @RequestParam(defaultValue = "1") int page) {
 
         var spec = specBuilder.build(params);
-        var products = productRepository.findAll(spec, PageRequest.of(page - 1, 10));
-        var result = products.map(productMapper::map);
-
-        return result.stream()
-                .toList();
+        var products = productRepository
+                .findAll(spec, PageRequest.of(page - 1, 10));
+        return products.map(productMapper::map).toList();
     }
     // END
 
