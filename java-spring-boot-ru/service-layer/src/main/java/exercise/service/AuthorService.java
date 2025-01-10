@@ -66,12 +66,12 @@ public class AuthorService {
         return authorDTO;
     }
 
-
+    // сделано в исследовательских целях :) Можно просто использовать @Valid в контроллере - выше сервиса
     private <T> void validation(T dto) {
         Set<ConstraintViolation<T>> violations = validator.validate(dto);
-        if(!violations.isEmpty()) {
+        if (!violations.isEmpty()) {
             StringBuilder sb = new StringBuilder();
-            for(ConstraintViolation<T> constraintViolation : violations) {
+            for (ConstraintViolation<T> constraintViolation : violations) {
                 sb.append(constraintViolation.getMessage());
             }
             throw new ConstraintViolationException("Error occurred: " + sb.toString(), violations);

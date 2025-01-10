@@ -50,7 +50,9 @@ public class BookService {
         var book = bookRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Book with id " + id + " not found"));
         var author = authorRepository.findById(book.getAuthor().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Author with id " + book.getAuthor().getId() + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Author with id " + book.getAuthor().getId() + " not found"
+                ));
         bookRepository.deleteById(id);
         author.getBooks().remove(book);
     }
@@ -78,11 +80,12 @@ public class BookService {
         return authorDTO;
     }
 
+    // сделано в исследовательских целях :)
     private <T> void validation(T dto) {
         Set<ConstraintViolation<T>> violations = validator.validate(dto);
-        if(!violations.isEmpty()) {
+        if (!violations.isEmpty()) {
             StringBuilder sb = new StringBuilder();
-            for(ConstraintViolation<T> constraintViolation : violations) {
+            for (ConstraintViolation<T> constraintViolation : violations) {
                 sb.append(constraintViolation.getMessage());
             }
             throw new ConstraintViolationException("Error occurred: " + sb.toString(), violations);
