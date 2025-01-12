@@ -15,6 +15,9 @@ public class CustomUserDetailsService implements UserDetailsManager {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // Нужно добавить в репозиторий findByEmail
