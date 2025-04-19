@@ -1,9 +1,8 @@
 package exercise;
 
-import java.sql.Time;
 import java.time.Instant;
 import java.util.Random;
-import java.util.Timer;
+
 
 // BEGIN
 public class ListThread extends Thread {

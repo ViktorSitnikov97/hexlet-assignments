@@ -1,26 +1,28 @@
 package exercise;
-
-import java.util.ArrayList;
-import java.util.List;
-
 class SafetyList {
     // BEGIN
-    private final List<Integer> innerList;
+    private int[] array;
+    private int size = 0;
 
     public SafetyList() {
-        innerList = new ArrayList<>();
+        array = new int[16];
     }
 
     public synchronized void add(int num) {
-        innerList.add(num);
+        if (array.length == size) {
+            int[] extendedData = new int[array.length * 2];
+            System.arraycopy(array, 0, extendedData, 0, array.length);
+            array = extendedData;
+        }
+        array[size++] = num;
     }
 
     public int get(int index) {
-        return innerList.get(index);
+        return array[index];
     }
 
     public int getSize() {
-        return innerList.size();
+        return size;
     }
     // END
 }
