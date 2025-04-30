@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,13 +29,15 @@ public class UserService {
     }
 
     public Mono<User> update(User data, Long id) {
-        return userRepository.findById(id)
-                .flatMap((user) -> {
-                    user.setFirstName(data.getFirstName());
-                    user.setLastName((data.getLastName()));
-                    user.setEmail(data.getEmail());
-                    return userRepository.save(user);
-                });
+//        return userRepository.findById(id)
+//                .flatMap((user) -> {
+//                    user.setFirstName(data.getFirstName());
+//                    user.setLastName((data.getLastName()));
+//                    user.setEmail(data.getEmail());
+//                    return userRepository.save(user);
+//                });
+        data.setId(id);
+        return userRepository.save(data);
     }
 
     public Mono<Void> delete(Long id) {
